@@ -49,11 +49,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerClickListener(this);
         List<Toilet> toilets = getToilets();
         List<Marker> markers=new ArrayList<>();
+        //builder to make sure the map includes all the markers we place
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
         for (Toilet toilet: toilets)
         {
             builder.include(toilet.getLatLng());
+            //add marker for each toilet
             MarkerOptions options = new MarkerOptions().position(toilet.getLatLng()).title(toilet.getBuilding());
+            //snippet is the text shown at the top
             String snippet=("Building: " + toilet.getBuilding() + "\nFloor: " + toilet.getFloor());
             switch (toilet.getGender())
             {
@@ -95,6 +98,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        //update the text
         ((TextView) findViewById(R.id.info)).setText(marker.getSnippet());
         return false;
     }
